@@ -1,4 +1,4 @@
-# Project _NAME_
+# Project "Hide and Seek (Name Pending)"
 
 [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet)
 
@@ -6,8 +6,8 @@ _REPLACE OR REMOVE EVERYTING BETWEEN "\_"_
 
 ### Student Info
 
--   Name: _YOUR NAME_
--   Section: _##_
+-   Name: Jacob Harman
+-   Section: 2 (Tues/Thurs 9:30 - 10:45)
 
 ## Simulation Design
 
