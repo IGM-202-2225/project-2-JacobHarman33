@@ -1,4 +1,4 @@
-# Project "Hide and Seek (Name Pending)"
+# Project "The Space Alliance vs The Space Pirates"
 
 [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet)
 
@@ -11,7 +11,14 @@ _REPLACE OR REMOVE EVERYTING BETWEEN "\_"_
 
 ## Simulation Design
 
-_A brief explanation of your simulation._
+The pirates have been a nuisance to the galaxy, and it's time to stop them, once and for all!
+Join up with your friends in the space alliance to defeat the pirates. However, the pirates have
+a captain of their own, so watch out!
+
+My premise for the simulation is that the Player is a hero of the Space Alliance so allied ships will rally to the
+player to attack the pirates, and won't attack until they have the courage to do so. 
+The pirates, on the other hand, will immediately start attacking the allies, but don't actively
+seek their captain.
 
 ### Controls
 
@@ -19,84 +26,103 @@ _A brief explanation of your simulation._
     -   _Include how to preform each action ( keyboard, mouse, UI Input )_
     -   _Include what impact an action has in the simulation ( if is could be unclear )_
 
-## _Agent 1 Name_
+## Alliance Member
 
-_A brief explanation of this agent._
+An allied spaceship of the player that tries to find the player to try
+and defeat the pirates.
 
-### _State 1 Name_
+### Finding Player
 
-**Objective:** _A brief explanation of this state's objective._
-
-#### Steering Behaviors
-
-- _List all behaviors used by this state_
-   - _If behavior has input data list it here_
-   - _eg, Flee - nearest Agent2_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
-   
-#### State Transistions
-
-- _List all the ways this agent can transition to this state_
-   - _eg, When this agent gets within range of Agent2_
-   - _eg, When this agent has reached target of State2_
-   
-### _State 2 Name_
-
-**Objective:** _A brief explanation of this state's objective._
+Before an ally will attack the pirates, it has to find the player to
+have the confidence to attack. In this state, it flees from pirates.
 
 #### Steering Behaviors
 
-- _List all behaviors used by this state_
+- Flee - nearest Pirate
+- Seek - Player
+- StayInBounds
+
 - Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+- Seperation - Other alliance members, Player
    
 #### State Transistions
 
-- _List all the ways this agent can transition to this state_
+- Spawn in
+- When an ally is defeated, a new ally is spawned to continue transitioning into this state
+   
+### Attack Pirates
 
-## _Agent 2 Name_
-
-_A brief explanation of this agent._
-
-### _State 1 Name_
-
-**Objective:** _A brief explanation of this state's objective._
+Once an ally has found the Player, they group up with the player and other inspired
+allies to attack the pirates.
 
 #### Steering Behaviors
 
-- _List all behaviors used by this state_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+- Seek - closest pirate
+- Pursue - closest pirate once in range
+- Cohesion - other inspired allies and Player
+- Alignment - other inspired allies and Player
+- StayInBounds
    
+- Obstacles - _List all obstacle types this state avoids_
+- Seperation - Other alliance members, Player
+
 #### State Transistions
 
-- _List all the ways this agent can transition to this state_
-   
-### _State 2 Name_
+- Found the Player
 
-**Objective:** _A brief explanation of this state's objective._
+## Space Pirate Member
+
+These troublesome pirates attack members of the alliance as well as the player
+to try and continue their reign on the galactic black market. When the find
+the pirate leader, they become even more deadly!
+
+### Attack Allies
+
+Seek and pursue allied ships to try and take them out.
 
 #### Steering Behaviors
 
-- _List all behaviors used by this state_
+- Seek - nearest ally
+- Pursue - found ally once in range
+- StayInBounds
+
 - Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+- Seperation - Other pirates, Pirate captain
    
 #### State Transistions
 
-- _List all the ways this agent can transition to this state_
+- Spawn in
+- - When a pirate is defeated, a new pirate is spawned to continue transitioning into this state
+   
+### Follow the Leader
+
+Once the captain has found other members of his pirate coalition, he coordinates them
+to make attacks against allies more efficient. Pirates in the captain's range will
+group up with the captain.
+
+#### Steering Behaviors
+
+- Seek - closest ally
+- Pursue - closest ally once in range
+- Cohesion - other coordinated pirates and pirate captain
+- Cohesion - other coordinated pirates and pirate captain
+- StayInBounds
+
+- Obstacles - _List all obstacle types this state avoids_
+- Seperation - Other pirates, Pirate captain
+   
+#### State Transistions
+
+- Find the pirate captain
 
 ## Sources
 
--   _List all project sources here –models, textures, sound clips, assets, etc._
--   _If an asset is from the Unity store, include a link to the page and the author’s name_
+- Spaceship Image from https://www.kenney.nl/assets/space-shooter-redux
 
 ## Make it Your Own
 
-- _List out what you added to your game to make it different for you_
-- _If you will add more agents or states make sure to list here and add it to the documention above_
-- _If you will add your own assets make sure to list it here and add it to the Sources section
+- Using Player from SHMUP
+- Using Pirate Captain as counter to player coordination mechanic, could become seperate agent
 
 ## Known Issues
 
