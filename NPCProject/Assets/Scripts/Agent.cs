@@ -28,6 +28,8 @@ public abstract class Agent : MonoBehaviour
 
     public float personalSpace = 1f;
 
+    protected List<Vector3> foundObstaclePositions = new List<Vector3>();
+
     public abstract void CalculateSteeringForces();
 
     // Start is called before the first frame update
@@ -129,5 +131,30 @@ public abstract class Agent : MonoBehaviour
         }
         
         return totalSeperateForce;
+    }
+
+    public Vector3 AvoidObstacles()
+    {
+        foundObstaclePositions.Clear();
+
+        // Vector from agent to obstacle
+        Vector3 AtoO = Vector3.zero;
+        float forwardDot = Vector3.Dot(AtoO, physicsObject.direction);
+
+        foreach (Obstacle obstacle in AgentManager.Instance.Obstacles)
+        {
+            AtoO = obstacle.transform.position - transform.position;
+
+            forwardDot = Vector3.Dot(AtoO, physicsObject.direction);
+
+            // Check if in front of use
+            if(forwardDot >= -(obstacle.radius + physicsObject.radius))
+            {
+                // Move this line
+                foundObstaclePositions.Add(obstacle.transform.position);
+            }
+        }
+
+        return Vector3.zero;
     }
 }

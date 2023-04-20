@@ -207,6 +207,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1042902710 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2104885638998169933, guid: 43bb80450469a7e45af4869d03233071, type: 3}
+  m_PrefabInstance: {fileID: 2182407115257356832}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c610361c1a9e15f4aa7ec85f09e0c6b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1153787122
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +252,8 @@ MonoBehaviour:
   Agents: []
   obstaclePrefab: {fileID: 2104885638998169933, guid: 43bb80450469a7e45af4869d03233071, type: 3}
   obstacleSpawnCount: 3
-  Obstacles: []
+  Obstacles:
+  - {fileID: 1042902710}
 --- !u!4 &1153787124
 Transform:
   m_ObjectHideFlags: 0
@@ -270,11 +282,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7069039546035834105, guid: 43bb80450469a7e45af4869d03233071, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.24
+      value: -5.58
       objectReference: {fileID: 0}
     - target: {fileID: 7069039546035834105, guid: 43bb80450469a7e45af4869d03233071, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.94
+      value: 3.32
       objectReference: {fileID: 0}
     - target: {fileID: 7069039546035834105, guid: 43bb80450469a7e45af4869d03233071, type: 3}
       propertyPath: m_LocalPosition.z

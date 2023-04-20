@@ -43,6 +43,8 @@ public class PhysicsObject : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
         }
 
+        transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
+
         acceleration = Vector3.zero;
     }
 
