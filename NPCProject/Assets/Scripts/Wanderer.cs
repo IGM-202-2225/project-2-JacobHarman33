@@ -6,7 +6,7 @@ public class Wanderer : Agent
 {
     public float boundsScalar = 2f;
     public float wanderScalar = 2f;
-    public float avoidanceScalar = 1f;
+    public float avoidanceScalar = 2f;
 
     private float delayTime = 0.5f;
     private float wanderTime;

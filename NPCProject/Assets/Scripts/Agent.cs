@@ -27,6 +27,8 @@ public abstract class Agent : MonoBehaviour
     private float width;
 
     public float personalSpace = 1f;
+    
+    public float visionRange = 4f;
 
     protected List<Vector3> foundObstaclePositions = new List<Vector3>();
 
@@ -140,21 +142,41 @@ public abstract class Agent : MonoBehaviour
         // Vector from agent to obstacle
         Vector3 AtoO = Vector3.zero;
         float forwardDot = Vector3.Dot(AtoO, physicsObject.direction);
+        float rightDot = Vector3.Dot(physicsObject.transform.right, physicsObject.direction);
+        Vector3 desiredVelocity = Vector3.zero;
+        Vector3 finalForce = Vector3.zero;
 
         foreach (Obstacle obstacle in AgentManager.Instance.Obstacles)
         {
             AtoO = obstacle.transform.position - transform.position;
 
             forwardDot = Vector3.Dot(AtoO, physicsObject.direction);
+            rightDot = Vector3.Dot(physicsObject.transform.right, physicsObject.direction);
 
-            // Check if in front of use
-            if(forwardDot >= -(obstacle.radius + physicsObject.radius))
+            // Checks
+            if(forwardDot >= -(obstacle.radius + physicsObject.radius)
+                && Mathf.Abs(rightDot) < physicsObject.radius + obstacle.radius
+                && forwardDot < visionRange)
             {
-                // Move this line
                 foundObstaclePositions.Add(obstacle.transform.position);
+
+                if(rightDot > 0)
+                {
+                    desiredVelocity = physicsObject.transform.right * -maxSpeed;
+                }
+                else
+                {
+                   desiredVelocity = physicsObject.transform.right * maxSpeed;
+                }
+
+                float weight = visionRange / (forwardDot + 0.1f);
+
+                Vector3 steeringForce = (desiredVelocity - physicsObject.velocity) * weight;
+
+                finalForce += steeringForce;
             }
         }
 
-        return Vector3.zero;
+        return finalForce;
     }
 }
