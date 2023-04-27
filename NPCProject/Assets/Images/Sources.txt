@@ -1,1 +1,1 @@
-Spaceship Image from https://www.kenney.nl/assets/space-shooter-redux
+Spaceship and Asteroid Image from https://www.kenney.nl/assets/space-shooter-redux
