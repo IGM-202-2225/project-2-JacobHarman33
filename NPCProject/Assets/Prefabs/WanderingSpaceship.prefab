@@ -122,6 +122,9 @@ MonoBehaviour:
   maxWanderAngle: 45
   maxWanderChangePerSecond: 10
   radius: 1
-  personalSpace: 2.75
+  personalSpace: 4
+  visionRange: 3
   boundsScalar: 4
   wanderScalar: 6
+  avoidanceScalar: 3
+  avoidanceFutureTime: 2
