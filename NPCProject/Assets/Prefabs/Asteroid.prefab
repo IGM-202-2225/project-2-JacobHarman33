@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7069039546035834105}
   - component: {fileID: 9005078581045133246}
   - component: {fileID: 2104885638998169933}
+  - component: {fileID: 7996944251168839429}
+  - component: {fileID: 8599848630960791378}
   m_Layer: 0
   m_Name: Asteroid
   m_TagString: Untagged
@@ -97,4 +99,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c610361c1a9e15f4aa7ec85f09e0c6b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  radius: 0.5
+--- !u!114 &7996944251168839429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9115519718316448497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83ab16e5fd38c0b4d925e191d348b58f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointsManager: {fileID: 0}
+  isCurrentlyColliding: 0
+--- !u!114 &8599848630960791378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9115519718316448497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ad064543817274bb287785c96e909a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: {x: 0, y: 0, z: 0}
+  position: {x: 0, y: 0, z: 0}
+  direction: {x: 0, y: 0, z: 0}
+  mass: 1
   radius: 0.5

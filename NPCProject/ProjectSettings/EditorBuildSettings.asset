@@ -9,6 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/NPCProjectScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 0
-    path: Assets/Scenes/ObstacleTest.unity
-    guid: 1865fdd552928ac45b642fa3feff865b
-  m_configObjects: {}
+    path: Assets/Scenes/GameOver.unity
+    guid: 29e481e271f16f24a8150b38e51438d4
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 82246ba9c555ae14092fb82c7ed477e6, type: 2}

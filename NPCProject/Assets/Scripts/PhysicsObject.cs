@@ -30,22 +30,25 @@ public class PhysicsObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        position = transform.position;
-        velocity += acceleration * Time.deltaTime;
-        direction = velocity.normalized;
-
-        position += velocity * Time.deltaTime;
-
-        transform.position = position;
-
-        if (direction != Vector3.zero)
+        if(this.GetComponent<Player>() == null && this.GetComponent<Obstacle>() == null)
         {
+            position = transform.position;
+            velocity += acceleration * Time.deltaTime;
+            direction = velocity.normalized;
+
+            position += velocity * Time.deltaTime;
+
+            transform.position = position;
+
+            if (direction != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
+            }
+
             transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
+
+            acceleration = Vector3.zero;
         }
-
-        transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
-
-        acceleration = Vector3.zero;
     }
 
     public void ApplyForce(Vector3 force)
@@ -77,7 +80,7 @@ public class PhysicsObject : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(gameObject.transform.position, radius);
     }

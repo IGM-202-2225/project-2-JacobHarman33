@@ -2,8 +2,6 @@
 
 [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet)
 
-_REPLACE OR REMOVE EVERYTING BETWEEN "\_"_
-
 ### Student Info
 
 -   Name: Jacob Harman
@@ -17,14 +15,18 @@ a captain of their own, so watch out!
 
 My premise for the simulation is that the Player is a hero of the Space Alliance so allied ships will rally to the
 player to attack the pirates, and won't attack until they have the courage to do so. 
-The pirates, on the other hand, will immediately start attacking the allies, but don't actively
-seek their captain.
+The pirates, on the other hand, will immediately start attacking the allies, but only
+seek their captain as a secondary objective.
+
+Points are tallied for both sides when an ally or pirate ship is destroyed.
 
 ### Controls
 
--   _List all of the actions the player can have in your simulation_
-    -   _Include how to preform each action ( keyboard, mouse, UI Input )_
-    -   _Include what impact an action has in the simulation ( if is could be unclear )_
+- Movement
+	- Up: Up Arrow/W
+	- Down: Down Arrow/S
+	- Left: Left Arrow/A
+	- Right: Right Arrow/D
 
 ## Alliance Member
 
@@ -38,12 +40,13 @@ have the confidence to attack. In this state, it flees from pirates.
 
 #### Steering Behaviors
 
-- Flee - nearest Pirate
+- Wander
+- Evade - nearest Pirate
 - Seek - Player
 - StayInBounds
 
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - Other alliance members, Player
+- Obstacles - Asteroids
+- Seperation - Other alliance members
    
 #### State Transistions
 
@@ -52,19 +55,16 @@ have the confidence to attack. In this state, it flees from pirates.
    
 ### Attack Pirates
 
-Once an ally has found the Player, they group up with the player and other inspired
-allies to attack the pirates.
+Once an ally has found the Player, they become inspired and
+start attacking the pirates.
 
 #### Steering Behaviors
 
-- Seek - closest pirate
 - Pursue - closest pirate once in range
-- Cohesion - other inspired allies and Player
-- Alignment - other inspired allies and Player
 - StayInBounds
    
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - Other alliance members, Player
+- Obstacles - Asteroids
+- Seperation - Other alliance members
 
 #### State Transistions
 
@@ -82,34 +82,32 @@ Seek and pursue allied ships to try and take them out.
 
 #### Steering Behaviors
 
-- Seek - nearest ally
-- Pursue - found ally once in range
+- Wander
+- Pursue - nearest ally
+- Seek - Pirate leader
 - StayInBounds
 
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - Other pirates, Pirate captain
+- Obstacles - Asteroids
+- Seperation - Other pirates
    
 #### State Transistions
 
 - Spawn in
-- - When a pirate is defeated, a new pirate is spawned to continue transitioning into this state
+- When a pirate is defeated, a new pirate is spawned to continue transitioning into this state
    
 ### Follow the Leader
 
 Once the captain has found other members of his pirate coalition, he coordinates them
-to make attacks against allies more efficient. Pirates in the captain's range will
-group up with the captain.
+to make attacks against allies more efficient.
 
 #### Steering Behaviors
 
-- Seek - closest ally
+- Wander
 - Pursue - closest ally once in range
-- Cohesion - other coordinated pirates and pirate captain
-- Cohesion - other coordinated pirates and pirate captain
 - StayInBounds
 
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - Other pirates, Pirate captain
+- Obstacles - Asteroids
+- Seperation - Other pirates
    
 #### State Transistions
 
@@ -117,18 +115,28 @@ group up with the captain.
 
 ## Sources
 
-- Spaceship Image from https://www.kenney.nl/assets/space-shooter-redux
+- Spaceships and Asteroid Images from https://www.kenney.nl/assets/space-shooter-redux
 
 ## Make it Your Own
 
 - Using Player from SHMUP
-- Using Pirate Captain as counter to player coordination mechanic, could become seperate agent
+	- Player Input from SHMUP
+	- Player can run into pirates to destroy them
+	- However, if a player hits an asteroid they destroy the asteroid but it's a point off for allies
+- Using Pirate Captain as counter to player coordination mechanic
+	- Is an agent, but does not have any states similar to the player
+	- Steering Behaviors
+		- Wander
+		- Pursue - nearest ally
+		- StayInBounds
+	- Obstacles - Asteroids
+	- Seperation - Other pirates
 
 ## Known Issues
 
-_List any errors, lack of error checking, or specific information that I need to know to run your program_
+- N/A - runs normally
 
 ### Requirements not completed
 
-_If you did not complete a project requirement, notate that here_
+- Not sure about states
 

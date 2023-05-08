@@ -30,6 +30,8 @@ public abstract class Agent : MonoBehaviour
     
     public float visionRange = 4f;
 
+    public bool foundLeader = false;
+
     protected List<Vector3> foundObstaclePositions = new List<Vector3>();
 
     public abstract void CalculateSteeringForces();
@@ -48,6 +50,17 @@ public abstract class Agent : MonoBehaviour
         CalculateSteeringForces();
         totalForce = Vector3.ClampMagnitude(totalForce, maxForce);
         physicsObject.ApplyForce(totalForce);
+
+        if(this.GetComponent<PirateLeader>() == null) {
+            if (foundLeader)
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+            }
+            else
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+            }
+        }
     }
 
     public Vector3 Seek(Vector3 targetPos)
@@ -135,6 +148,81 @@ public abstract class Agent : MonoBehaviour
         return totalSeperateForce;
     }
 
+    public Vector3 Evade<T>(List<T> agents) where T : Agent
+    {
+        Vector3 totalEvadeForce = Vector3.zero;
+        float sqrPersonalSpace = Mathf.Pow(personalSpace, 2);
+
+        foreach(T other in agents){
+            float sqrDistance = Vector3.SqrMagnitude(other.physicsObject.position - physicsObject.position);
+
+            if(sqrDistance < float.Epsilon)
+            {
+                continue;
+            }
+
+            if(sqrDistance < sqrPersonalSpace)
+            {
+                float weight = sqrPersonalSpace / (sqrDistance + 0.1f);
+                totalEvadeForce += Flee(other.physicsObject.position) * weight;
+            }
+        }
+        
+        return totalEvadeForce;
+    }
+
+    public Vector3 Pursue<T>(List<T> agents) where T : Agent
+    {
+        Vector3 totalPursueForce = Vector3.zero;
+        float sqrPersonalSpace = Mathf.Pow(personalSpace, 2);
+
+        foreach(T other in agents){
+            float sqrDistance = Vector3.SqrMagnitude(other.physicsObject.position - physicsObject.position);
+
+            if(sqrDistance < float.Epsilon)
+            {
+                continue;
+            }
+
+            if(sqrDistance < sqrPersonalSpace)
+            {
+                float weight = sqrPersonalSpace / (sqrDistance + 0.1f);
+                totalPursueForce += Seek(other.physicsObject.position) * weight;
+            }
+        }
+        
+        return totalPursueForce;
+    }
+
+    public void FindLeader<T>(List<T> objects) where T : CollidableObject
+    {
+        float sqrPersonalSpace = Mathf.Pow(personalSpace, 2);
+
+        foreach(T other in objects){
+            if (other != null)
+            {
+                float sqrDistance = Vector3.SqrMagnitude(other.GetComponent<PhysicsObject>().position - physicsObject.position);
+
+                if (sqrDistance < float.Epsilon)
+                {
+                    continue;
+                }
+
+                if (sqrDistance < sqrPersonalSpace)
+                {
+                    if (other.GetComponent<Player>() != null && this.GetComponent<Ally>() != null)
+                    {
+                        foundLeader = true;
+                    }
+                    if(other.GetComponent<PirateLeader>() != null && this.GetComponent<Pirate>() != null)
+                    {
+                        foundLeader = true;
+                    }
+                }
+            }
+        }
+    }
+
     public Vector3 AvoidObstacles()
     {
         foundObstaclePositions.Clear();
@@ -148,32 +236,35 @@ public abstract class Agent : MonoBehaviour
 
         foreach (Obstacle obstacle in AgentManager.Instance.Obstacles)
         {
-            AtoO = obstacle.transform.position - transform.position;
-
-            forwardDot = Vector3.Dot(AtoO, physicsObject.direction);
-            rightDot = Vector3.Dot(physicsObject.transform.right, physicsObject.direction);
-
-            // Checks
-            if(forwardDot >= -(obstacle.radius + physicsObject.radius)
-                && Mathf.Abs(rightDot) < physicsObject.radius + obstacle.radius
-                && forwardDot < visionRange)
+            if (obstacle != null)
             {
-                foundObstaclePositions.Add(obstacle.transform.position);
+                AtoO = obstacle.transform.position - transform.position;
 
-                if(rightDot > 0)
+                forwardDot = Vector3.Dot(AtoO, physicsObject.direction);
+                rightDot = Vector3.Dot(physicsObject.transform.right, physicsObject.direction);
+
+                // Checks
+                if (forwardDot >= -(obstacle.radius + physicsObject.radius)
+                    && Mathf.Abs(rightDot) < physicsObject.radius + obstacle.radius
+                    && forwardDot < visionRange)
                 {
-                    desiredVelocity = physicsObject.transform.right * -maxSpeed;
+                    foundObstaclePositions.Add(obstacle.transform.position);
+
+                    if (rightDot > 0)
+                    {
+                        desiredVelocity = physicsObject.transform.right * -maxSpeed;
+                    }
+                    else
+                    {
+                        desiredVelocity = physicsObject.transform.right * maxSpeed;
+                    }
+
+                    float weight = visionRange / (forwardDot + 0.1f);
+
+                    Vector3 steeringForce = (desiredVelocity - physicsObject.velocity) * weight;
+
+                    finalForce += steeringForce;
                 }
-                else
-                {
-                   desiredVelocity = physicsObject.transform.right * maxSpeed;
-                }
-
-                float weight = visionRange / (forwardDot + 0.1f);
-
-                Vector3 steeringForce = (desiredVelocity - physicsObject.velocity) * weight;
-
-                finalForce += steeringForce;
             }
         }
 

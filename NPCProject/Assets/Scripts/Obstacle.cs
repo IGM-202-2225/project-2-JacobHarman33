@@ -18,7 +18,7 @@ public class Obstacle : MonoBehaviour
         
     }
 
-    private void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(gameObject.transform.position, radius);
     }
